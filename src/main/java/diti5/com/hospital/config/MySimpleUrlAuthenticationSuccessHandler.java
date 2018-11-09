@@ -70,11 +70,11 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
       }
 
       if (isAdmin) {
-          return "/admin/index";
+          return "/admin/dashbord";
       } else if (isMedecin) {
-          return "/medecin/index";
+          return "/medecin/dashbord";
       } else if (isSecretaire) {
-          return "/secretaire/index";
+          return "/secretaire/dashbord";
       } else {
           throw new IllegalStateException();
       }

@@ -48,6 +48,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(bCryptPasswordEncoder);
     }
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/webjars/**").permitAll();
@@ -58,14 +59,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 authorizeRequests()
 
                 .antMatchers("/login").permitAll()
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/admin/**").access("hasRole('ADMIN') or hasRole('ADMIN')")//hasRole("ADMIN")
                 .antMatchers("/medecin/**").hasRole("MEDECIN")
                 .antMatchers("/secretaire/**").hasRole("SECRETAIRE")
-                .anyRequest().authenticated()
+                .anyRequest()
+                .authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")
                 .successHandler(myAuthenticationSuccessHandler());
+        //https://www.journaldev.com/8748/spring-security-role-based-access-authorization-example
              
     }
 
@@ -73,7 +76,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers( "/assets/**","/css/**", "/js/**");
+                .antMatchers( "/assets/**","/css/**", "/js/**","/images/**");
     }
     @Bean
     public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {

@@ -2,18 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Hospital | DashBord</title>
-    <div th:replace="fragments/layout :: layout-css"></div>
+    <div th:replace="fragments/layout-admin :: layout-css"></div>
 </head>
 <body>
 
 <div class="wrapper">
     <!--START LAYOUT NAV-LEFT HORIZONTAL-->
-   <div th:replace="fragments/layout :: layout-nav-left"></div>
+   <div th:replace="fragments/layout-admin :: layout-nav-left"></div>
     <!--END LAYOUT NAV-FELT HORIZONTAL-->
 
     <div class="main-panel">
         <!--START LAYOUT NAV HORIZONTAL-->
-        <div th:replace="fragments/layout :: layout-nav"></div>
+        <div th:replace="fragments/layout-admin :: layout-nav"></div>
         <!--END LAYOUT NAV HORIZONTAL-->
 
         <div class="content">
@@ -38,13 +38,13 @@
             </div>
 
             <!--START LAYOUT FOOTER-->
-            <div th:replace="fragments/layout :: layout-footer"></div>
+            <div th:replace="fragments/layout-admin :: layout-footer"></div>
             <!--START LAYOUT FOOTER-->
         </div>
     </div>
 </div>
 </body>
 <!--START LAYOUT JS-->
-<div th:replace="fragments/layout :: layout-js"></div>
+<div th:replace="fragments/layout-admin :: layout-js"></div>
 <!--END LAYOUT JS-->
 </html>

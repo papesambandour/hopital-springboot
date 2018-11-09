@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.User.UserBuilder;
@@ -37,7 +38,7 @@ public class CustumUserDetailsService implements UserDetailsService{
 		return null;
 	}
 	
-	private Collection getAuthorities(List roles) {
+	/*private Collection getAuthorities(List roles) {
 		List authorities = new ArrayList();
 		for(Object role : roles)
 		{
@@ -45,6 +46,16 @@ public class CustumUserDetailsService implements UserDetailsService{
 			authorities.add(new SimpleGrantedAuthority(l.getLibelle()));
 		}
 		return authorities ;
+	}*/
+
+	private Collection<? extends GrantedAuthority> getAuthorities(
+			Collection<Role> roles) {
+		List<GrantedAuthority> authorities
+				= new ArrayList<>();
+		for (Role role: roles) {
+			authorities.add(new SimpleGrantedAuthority(role.getLibelle()));
+		}
+		return authorities;
 	}
 
 }

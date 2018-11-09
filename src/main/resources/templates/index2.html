@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+	<div th:if="${param.error}">
+		<label style="color:red">Login ou mot de passe incorrecte</label>
+	</div>
     <div>
         <div>
             <form th:action="@{/login}" method="post">

@@ -40,7 +40,10 @@ public class Utilisateur {
 		inverseJoinColumns = @JoinColumn(name = "role_id")
 	)
 	private List<Role> listeRoles;
-	@ManyToOne 
+	@ManyToOne (cascade = {
+			CascadeType.PERSIST,
+			CascadeType.MERGE
+	},fetch=FetchType.EAGER)
 	private Service service; 
 	public Utilisateur() {}
 	public Utilisateur(int id, String username, String password, int enabled, String prenom, String nom,

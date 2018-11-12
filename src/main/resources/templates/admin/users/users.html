@@ -59,6 +59,7 @@
                                             <th>Username</th>
                                             <th>Matricule</th>
                                             <th>Username</th>
+                                            <th>Service</th>
                                             <th>etat</th>
                                             <th>Action</th>
                                         </tr>
@@ -71,7 +72,11 @@
                                             <td th:text="${user.getMatricule()}"></td>
                                             <td th:text="${user.getMatricule()}"></td>
                                             <td th:text="${user.getUsername()}"></td>
-                                            <td th:text="${user.getEnabled()}"></td>
+                                            <td th:text="${user.getService().getLibelle()}"></td>
+                                            <td >
+                                                <span th:if="${user.getEnabled() == 1}"> <label class="label label-success" style="color: white">Active</label></span>
+                                                <span th:if="${user.getEnabled()== 0}"><label class="label label-success" style="color: white">Desactive</label></span>
+                                            </td>
                                             <td style="text-align: center">
                                                 <a th:href="@{/admin/user/edit/}" ><button class="btn btn-success">Edit</button></a>
                                                 <a th:href="@{/admin/user/delete/}" ><button class="btn btn-outline-warning">Delete</button></a>

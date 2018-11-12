@@ -1,7 +1,10 @@
 package diti5.com.hospital.controller;
 
+import diti5.com.hospital.dao.RoleDAO;
 import diti5.com.hospital.dao.ServiceDOA;
 import diti5.com.hospital.dao.UtilisateurDAO;
+import diti5.com.hospital.model.Role;
+import diti5.com.hospital.model.Service;
 import diti5.com.hospital.model.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,6 +25,8 @@ public class AdminController {
 	private UtilisateurDAO userDAO ;
 	@Autowired
 	private ServiceDOA serviceDOA;
+	@Autowired
+	private RoleDAO roleDAO ;
 	@RequestMapping(value="/dashbord")
 	//@ResponseBody
 	//@RequestMapping(value="/course", method = RequestMethod.GET, produces="application/json")
@@ -39,20 +44,12 @@ public class AdminController {
 		return view;
 	}
 	@RequestMapping(value="/users/add")
-	public ModelAndView usersAdd(
-			@RequestParam(value="nom", required=true) String nom,
-			@RequestParam(value="prenom", required=true) String prenom,
-			@RequestParam(value="username", required=true) String username,
-			@RequestParam(value="matricule", required=true) String matricule,
-			@RequestParam(value="enabled", required=true) String enabled,
-			@RequestParam(value="idRole", required=true) String idRole,
-			@RequestParam(value="idService", required=true) String idService,
-			@RequestParam(value="password", required=true) String password
-	) {
-		Utilisateur u = new Utilisateur();
-		u.setNom(nom);u.setPassword(password);u.setMatricule(matricule);
-		u.setUsername(username);u.setService(serviceDOA.findById(Integer.parseInt(idService)).get());
+	public ModelAndView usersAdd() {
 		ModelAndView view = new ModelAndView("admin/users/add");
+		List<Role> roles = roleDAO.findAll();
+		List<Service> services = serviceDOA.findAll();
+		view.addObject("roles",roles);
+		view.addObject("services",services);
 		return view;
 	}
 	@RequestMapping(value="/users/edit/{idUser}",method = RequestMethod.GET)
@@ -64,7 +61,20 @@ public class AdminController {
 		return  view ;
 	}
 	@RequestMapping(value="/users/save",method = RequestMethod.POST)
-	public String usersSave(HttpServletResponse httpResponse) throws IOException {
+	public String usersSave(HttpServletResponse httpResponse,
+			@RequestParam(value="nom", required=true) String nom,
+			@RequestParam(value="prenom", required=true) String prenom,
+			@RequestParam(value="username", required=true) String username,
+			@RequestParam(value="matricule", required=true) String matricule,
+			@RequestParam(value="enabled", required=true) String enabled,
+			@RequestParam(value="idRole", required=true) String idRole,
+			@RequestParam(value="idService", required=true) String idService,
+			@RequestParam(value="password", required=true) String password) throws IOException
+	{
+		Utilisateur u = new Utilisateur();
+		u.setNom(nom);u.setPassword(password);u.setMatricule(matricule);
+		u.setUsername(username);u.setService(serviceDOA.findById(Integer.parseInt(idService)).get());
+		//u.setListeRoles(roleDAO.findAllById(new Iterable<Integer>([0,0])));
 		httpResponse.sendRedirect("/admin/users?addSuccess=1");
 		return null;
 	}

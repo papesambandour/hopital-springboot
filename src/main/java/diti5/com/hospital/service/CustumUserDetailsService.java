@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import diti5.com.hospital.dao.ServiceDOA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,6 +23,8 @@ import diti5.com.hospital.model.Utilisateur;
 public class CustumUserDetailsService implements UserDetailsService{
 	@Autowired
 	private UtilisateurDAO userDAO ;
+	@Autowired
+	private ServiceDOA serviceDOA ;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Utilisateurs | Hospital</title>
+    <div th:replace="fragments/layout-admin :: layout-css"></div>
+
+    <div th:replace="fragments/layout-admin :: layout-js"></div>
+
+</head>
+<body>
+
+<div class="wrapper">
+    <!--START LAYOUT NAV-LEFT HORIZONTAL-->
+    <div th:replace="fragments/layout-admin :: layout-nav-left"></div>
+    <!--END LAYOUT NAV-FELT HORIZONTAL-->
+
+    <div class="main-panel">
+        <!--START LAYOUT NAV HORIZONTAL-->
+        <div th:replace="fragments/layout-admin :: layout-nav"></div>
+        <!--END LAYOUT NAV HORIZONTAL-->
+
+        <!--MESSAGE ERREUR-->
+        <div th:if="${param.addSuccess}">
+            <script>
+                $.notify({
+                    icon: 'pe-7s-gift',
+                    message: "Utilisateur ajouter avec success"
+
+                }, {
+                    type: 'success',
+                    timer: 4000,
+                    placement: {
+                        from: "top",
+                        align: "center"
+                    },
+
+                });
+            </script>
+        </div>
+
+        <div class="content">
+            <div class="container-fluid myMainContainer">
+                <!--MAIN CONTENT-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Gestion utilisateurs
+                                <span class="pull-right"><a th:href="@{/admin/users/add}" ><button class="btn btn-primary">Ajouter</button></a></span>
+                                </h4>
+                            </div>
+                            <div>
+                                <div class="content">
+                                <table class="table table-striped table-bordered table-active">
+                                    <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Prenom</th>
+                                            <th>Username</th>
+                                            <th>Matricule</th>
+                                            <th>Username</th>
+                                            <th>etat</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody th:each="user : ${users}">
+
+                                        <tr>
+                                            <td th:text="${user.getNom()}"></td>
+                                            <td th:text="${user.getPrenom()}"></td>
+                                            <td th:text="${user.getMatricule()}"></td>
+                                            <td th:text="${user.getMatricule()}"></td>
+                                            <td th:text="${user.getUsername()}"></td>
+                                            <td th:text="${user.getEnabled()}"></td>
+                                            <td style="text-align: center">
+                                                <a th:href="@{/admin/user/edit/}" ><button class="btn btn-success">Edit</button></a>
+                                                <a th:href="@{/admin/user/delete/}" ><button class="btn btn-outline-warning">Delete</button></a>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--MAIN CONTENT-->
+            </div>
+
+            <!--START LAYOUT FOOTER-->
+            <div th:replace="fragments/layout-admin :: layout-footer"></div>
+            <!--START LAYOUT FOOTER-->
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

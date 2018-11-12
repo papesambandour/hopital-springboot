@@ -24,6 +24,7 @@ public class Utilisateur {
 	@Column(length=100)
 	private String password;
 	private int enabled;
+	private int changed;
 	@Column(length=100)
 	private String prenom;
 	@Column(length=50)
@@ -101,5 +102,20 @@ public class Utilisateur {
 	public void setListeRoles(List<Role> listeRoles) {
 		this.listeRoles = listeRoles;
 	}
-	
+
+	public int getChanged() {
+		return changed;
+	}
+
+	public void setChanged(int changed) {
+		this.changed = changed;
+	}
+
+	public Service getService() {
+		return service;
+	}
+
+	public void setService(Service service) {
+		this.service = service;
+	}
 }

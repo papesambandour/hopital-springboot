@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Utilisateurs | Hospital</title>
+    <div th:replace="fragments/layout-admin :: layout-css"></div>
+</head>
+<body>
+
+<div class="wrapper">
+    <!--START LAYOUT NAV-LEFT HORIZONTAL-->
+    <div th:replace="fragments/layout-admin :: layout-nav-left"></div>
+    <!--END LAYOUT NAV-FELT HORIZONTAL-->
+
+    <div class="main-panel">
+        <!--START LAYOUT NAV HORIZONTAL-->
+        <div th:replace="fragments/layout-admin :: layout-nav"></div>
+        <!--END LAYOUT NAV HORIZONTAL-->
+
+        <div class="content">
+            <div class="container-fluid myMainContainer">
+                <!--MAIN CONTENT-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Ajout utilisateur</h4>
+                            </div>
+                            <div>
+                                <div class="content">
+                                    <form th:action="@{/admin/users/save}" method="post" class="form form-horizontal">
+                                        <div class="input-group form-group">
+                                            <label for="nom" class="control-label">Nom</label>
+                                            <input type="text" class="form-control" placeholder="Nom" id="nom" name="nom" required>
+                                        </div>
+                                        <div class="input-group form-group ">
+                                            <label for="prenom" class="control-label">Prenom</label>
+                                            <input type="text" class="form-control" placeholder="Prenom" id="prenom" name="prenom" required>
+                                        </div>
+                                        <div class="input-group form-group">
+                                            <label for="username" class="control-label">Nom d'utilisateur</label>
+                                            <input type="text" class="form-control" placeholder="Nom d'utilisateur" id="username" name="username" required>
+                                        </div>
+                                        <div class="input-group form-group">
+                                            <label for="matricule" class="control-label">Matricule</label>
+                                            <input type="text" class="form-control" placeholder="Nom d'utilisateur" id="matricule" name="matricule" required>
+                                        </div>
+                                        <div class="input-group form-group">
+                                            <label for="password" class="control-label">Mot de passe</label>
+                                            <input type="text" class="form-control" placeholder="Nom d'utilisateur" id="password" name="password" required>
+                                        </div>
+                                        <div class="input-group form-group">
+                                            <label for="enabled" class="control-label">Etat</label>
+                                            <select name="enabled" id="enabled" class="form-group">
+                                                <option value="" disabled hidden selected>Choix</option>
+                                                <option value="1">Active</option>
+                                                <option value="0">Desactive</option>
+                                            </select>
+                                        </div>
+                                        <div style="text-align: center" >
+                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--MAIN CONTENT-->
+            </div>
+
+            <!--START LAYOUT FOOTER-->
+            <div th:replace="fragments/layout-admin :: layout-footer"></div>
+            <!--START LAYOUT FOOTER-->
+        </div>
+    </div>
+</div>
+</body>
+<!--START LAYOUT JS-->
+<div th:replace="fragments/layout-admin :: layout-js"></div>
+<!--END LAYOUT JS-->
+</html>

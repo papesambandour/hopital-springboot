@@ -118,6 +118,22 @@
 
                 });
             </script>
+        </div><div th:if="${param.logout}">
+            <script>
+                $.notify({
+                    icon: 'pe-7s-gift',
+                    message: "Deconnexion reussit avec succés"
+
+                }, {
+                    type: 'success',
+                    timer: 4000,
+                    placement: {
+                        from: "top",
+                        align: "center"
+                    },
+
+                });
+            </script>
         </div>
         <div class="card">
             <div class="card-header">

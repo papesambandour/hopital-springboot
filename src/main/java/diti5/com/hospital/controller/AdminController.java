@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -57,8 +58,19 @@ public class AdminController {
 	{
 		ModelAndView view = new ModelAndView("admin/users/edit");
 		Utilisateur user = userDAO.findById(Integer.parseInt(idUser)).get();
+		List<Role> roles = roleDAO.findAll();
+		List<Service> services = serviceDOA.findAll();
+		view.addObject("roles",roles);
+		view.addObject("services",services);
 		view.addObject("user",user);
 		return  view ;
+	}
+	@RequestMapping(value="/users/delete/{idUser}",method = RequestMethod.GET)
+	public ModelAndView usersDelete(HttpServletResponse httpResponse,@PathVariable("idUser") String idUser) throws IOException {
+		Utilisateur user = userDAO.findById(Integer.parseInt(idUser)).get();
+		userDAO.delete(user);
+		httpResponse.sendRedirect("/admin/users?deleteSuccesse=1");
+		return null;
 	}
 	@RequestMapping(value="/users/save",method = RequestMethod.POST)
 	public String usersSave(HttpServletResponse httpResponse,
@@ -67,15 +79,47 @@ public class AdminController {
 			@RequestParam(value="username", required=true) String username,
 			@RequestParam(value="matricule", required=true) String matricule,
 			@RequestParam(value="enabled", required=true) String enabled,
-			@RequestParam(value="idRole", required=true) String idRole,
+			@RequestParam(value="idRole", required=true) List<String> idRole,
 			@RequestParam(value="idService", required=true) String idService,
 			@RequestParam(value="password", required=true) String password) throws IOException
 	{
 		Utilisateur u = new Utilisateur();
-		u.setNom(nom);u.setPassword(password);u.setMatricule(matricule);
+		u.setNom(nom);u.setPassword(bCrypteEncoder.encode(password));u.setMatricule(matricule);
+		u.setPrenom(prenom);u.setEnabled(Integer.parseInt(enabled));
+		List<Role> roles = new ArrayList<Role>();
+		for(String idR : idRole)
+		{
+			roles.add(roleDAO.findById(Integer.parseInt(idR)).get());
+		}
 		u.setUsername(username);u.setService(serviceDOA.findById(Integer.parseInt(idService)).get());
-		//u.setListeRoles(roleDAO.findAllById(new Iterable<Integer>([0,0])));
+		u.setListeRoles(roles);
+		userDAO.save(u);
 		httpResponse.sendRedirect("/admin/users?addSuccess=1");
+		return null;
+
+	}@RequestMapping(value="/users/update",method = RequestMethod.POST)
+	public String usersUpdate(HttpServletResponse httpResponse,
+			@RequestParam(value="id", required=true) String id,
+			@RequestParam(value="nom", required=true) String nom,
+			@RequestParam(value="prenom", required=true) String prenom,
+			@RequestParam(value="username", required=true) String username,
+			@RequestParam(value="matricule", required=true) String matricule,
+			@RequestParam(value="enabled", required=true) String enabled,
+			@RequestParam(value="listeRoles", required=true) List<String> idRole,
+			@RequestParam(value="service", required=true) String idService) throws IOException
+	{
+		Utilisateur u = userDAO.findById(Integer.parseInt(id)).get();
+		u.setNom(nom);u.setMatricule(matricule);
+		u.setPrenom(prenom);u.setEnabled(Integer.parseInt(enabled));
+		List<Role> roles = new ArrayList<Role>();
+		for(String idR : idRole)
+		{
+			roles.add(roleDAO.findById(Integer.parseInt(idR)).get());
+		}
+		u.setUsername(username);u.setService(serviceDOA.findById(Integer.parseInt(idService)).get());
+		u.setListeRoles(roles);
+		userDAO.save(u);
+		httpResponse.sendRedirect("/admin/users?updateSuccess=1");
 		return null;
 	}
 	@RequestMapping(value="/roles")

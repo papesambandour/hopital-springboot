@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hospital | DashBord Medecin</title>
+    <div th:replace="fragments/layout-medecin :: layout-css"></div>
+</head>
+<body>
+
+<div class="wrapper">
+    <!--START LAYOUT NAV-LEFT HORIZONTAL-->
+    <div th:replace="fragments/layout-medecin :: layout-nav-left"></div>
+    <!--END LAYOUT NAV-FELT HORIZONTAL-->
+
+    <div class="main-panel">
+        <!--START LAYOUT NAV HORIZONTAL-->
+        <div th:replace="fragments/layout-medecin :: layout-nav"></div>
+        <!--END LAYOUT NAV HORIZONTAL-->
+
+        <div class="content">
+            <div class="container-fluid myMainContainer">
+                <!--MAIN CONTENT-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title center-pill">MEDECIN PANEL</h4>
+                                <p class="category ">Dernier connexion : le 18-10-2018 a 18:25:23</p>
+                            </div>
+                            <div>
+                                <div class="content">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--MAIN CONTENT-->
+            </div>
+
+            <!--START LAYOUT FOOTER-->
+            <div th:replace="fragments/layout-medecin :: layout-footer"></div>
+            <!--START LAYOUT FOOTER-->
+        </div>
+    </div>
+</div>
+</body>
+<!--START LAYOUT JS-->
+<div th:replace="fragments/layout-medecin :: layout-js"></div>
+<!--END LAYOUT JS-->
+</html>

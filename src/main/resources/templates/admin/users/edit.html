@@ -23,55 +23,56 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title">Ajout utilisateur</h4>
+                                <h4 class="title">Edit utilisateur</h4>
                             </div>
                             <div>
                                 <div class="content" style="margin: 30px">
-                                    <form th:action="@{/admin/users/save}" method="post">
+                                    <form th:action="@{/admin/users/update}" method="post" th:object="${user}">
                                         <div class="form-group row">
                                             <label for="nom" class="col-sm-2 col-form-label">Nom</label>
                                             <div class="col-sm-10">
-                                                 <input type="text" class="form-control" placeholder="Nom" id="nom" name="nom" required>
+                                                 <input type="text" class="form-control" placeholder="Nom" id="nom" name="nom" th:field="*{nom}" required>
+                                                  <input type="hidden" id="name" th:field="*{id}"/>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="prenom"  class="col-sm-2 col-form-label">Prenom</label>
                                             <div class="col-sm-10">
-                                            <input type="text" class="form-control" placeholder="Prenom" id="prenom" name="prenom" required>
+                                            <input type="text" class="form-control" placeholder="Prenom" id="prenom" name="prenom" th:field="*{prenom}" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="username" class="col-sm-2 col-form-label">Nom d'utilisateur</label>
                                             <div class="col-sm-10">
-                                            <input type="text" class="form-control form-control-lg" placeholder="Nom d'utilisateur" id="username" name="username" required>
+                                            <input type="text" class="form-control form-control-lg" th:field="*{username}" placeholder="Nom d'utilisateur" id="username" name="username" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="matricule" class="col-sm-2 col-form-label">Matricule</label>
                                             <div class="col-sm-10">
-                                            <input type="text" class="form-control" placeholder="Nom d'utilisateur" id="matricule" name="matricule" required>
+                                            <input type="text" class="form-control" placeholder="Nom d'utilisateur" th:field="*{matricule}" id="matricule" name="matricule" required>
                                             </div>
                                             </div>
-                                        <div class="form-group row">
+                                        <!--<div class="form-group row">
                                             <label for="password" class="col-sm-2 col-form-label">Mot de passe</label>
                                             <div class="col-sm-10">
-                                            <input type="password" class="form-control" placeholder="Mot de Passe" id="password" name="password" required>
+                                            <input type="text" class="form-control" placeholder="Mot de Passe" th:field="*{password}" id="password" name="password" required>
                                             </div>
-                                        </div>
+                                        </div>-->
                                         <div class="form-group row">
                                             <label for="enabled" class="col-sm-2 col-form-label">Etat</label>
                                             <div class="col-sm-10">
-                                            <select name="enabled" id="enabled" class="form-control" required>
+                                            <select name="enabled" id="enabled" class="form-control" required >
                                                 <option value="" disabled hidden selected>Choisir l'etat</option>
-                                                <option value="1">Active</option>
-                                                <option value="0">Desactive</option>
+                                                <option th:value="${1}">Active</option>
+                                                <option th:value="${0}">Desactive</option>
                                             </select>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="idService" class="col-sm-2 col-form-label">Services</label>
                                             <div class="col-sm-10">
-                                            <select name="idService" id="idService" class="form-control"required >
+                                            <select name="idService" th:field="*{service}" id="idService" class="form-control"required  >
                                                 <option value="" selected hidden disabled>Choisir un service</option>
                                                 <option th:each="service : ${services}"  th:value="${service.getId()}"><span th:text="${service.getLibelle()}"></span></option>
                                             </select>
@@ -80,14 +81,14 @@
                                         <div class="form-group row">
                                             <label for="idRole" class="col-sm-2 col-form-label">Roles</label>
                                             <div class="col-sm-10">
-                                            <select name="idRole" id="idRole" class="form-control"  required multiple>
+                                            <select name="idRole"  th:field="*{listeRoles}" id="idRole" class="form-control"  required multiple >
                                                 <option value="" selected hidden disabled>Choisir les roles</option>
                                                 <option th:each="role : ${roles}" th:value="${role.getId()}"><span th:text="${role.getLibelle()}"></span></option>
                                             </select>
                                             </div>
                                         </div>
                                         <div style="text-align: center" >
-                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                            <button type="submit" class="btn btn-primary">Mis a jour</button>
                                         </div>
 
                                     </form>

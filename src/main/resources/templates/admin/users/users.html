@@ -37,6 +37,41 @@
                 });
             </script>
         </div>
+        <div th:if="${param.deleteSuccesse}">
+            <script>
+                $.notify({
+                    icon: 'pe-7s-gift',
+                    message: "Utilisateur supprimer avec success"
+
+                }, {
+                    type: 'success',
+                    timer: 4000,
+                    placement: {
+                        from: "top",
+                        align: "center"
+                    },
+
+                });
+            </script>
+        </div>
+
+        <div th:if="${param.updateSuccess}">
+            <script>
+                $.notify({
+                    icon: 'pe-7s-gift',
+                    message: "Utilisateur mis a jour avec succés"
+
+                }, {
+                    type: 'success',
+                    timer: 4000,
+                    placement: {
+                        from: "top",
+                        align: "center"
+                    },
+
+                });
+            </script>
+        </div>
 
         <div class="content">
             <div class="container-fluid myMainContainer">
@@ -73,13 +108,13 @@
                                             <td th:text="${user.getMatricule()}"></td>
                                             <td th:text="${user.getUsername()}"></td>
                                             <td th:text="${user.getService().getLibelle()}"></td>
-                                            <td >
+                                            <td  style="text-align: center">
                                                 <span th:if="${user.getEnabled() == 1}"> <label class="label label-success" style="color: white">Active</label></span>
-                                                <span th:if="${user.getEnabled()== 0}"><label class="label label-success" style="color: white">Desactive</label></span>
+                                                <span th:if="${user.getEnabled()== 0}"><label class="label label-danger" style="color: white">Desactive</label></span>
                                             </td>
                                             <td style="text-align: center">
-                                                <a th:href="@{/admin/user/edit/}" ><button class="btn btn-success">Edit</button></a>
-                                                <a th:href="@{/admin/user/delete/}" ><button class="btn btn-outline-warning">Delete</button></a>
+                                                <a th:href="@{'/admin/users/edit/' + ${user.getId()}}" ><button class="btn btn-success">Edit</button></a>
+                                                <a th:href="@{'/admin/users/delete/' + ${user.getId()}}" ><button class="btn btn-outline-warning">Delete</button></a>
                                             </td>
                                         </tr>
 

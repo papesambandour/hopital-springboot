@@ -118,7 +118,8 @@
 
                 });
             </script>
-        </div><div th:if="${param.logout}">
+        </div>
+        <div th:if="${param.logout == 1 && param.successChange == null}">
             <script>
                 $.notify({
                     icon: 'pe-7s-gift',
@@ -135,7 +136,24 @@
                 });
             </script>
         </div>
-        <div class="card">
+        <div th:if="${param.logout==1 && param.successChange==1}">
+            <script>
+                $.notify({
+                    icon: 'pe-7s-gift',
+                    message: "Changement mot de passe effectuer avec succes. Vueillez vous connecter maintenant"
+
+                }, {
+                    type: 'success',
+                    timer: 4000,
+                    placement: {
+                        from: "top",
+                        align: "center"
+                    }
+
+                });
+            </script>
+        </div>
+        <div class="card" th:if="${param.changed == null}">
             <div class="card-header">
                 <h3>Connexion</h3>
                 <div class="d-flex justify-content-end social_icon">
@@ -171,6 +189,73 @@
             <div class="card-footer">
                 <div class="d-flex justify-content-center links">
                    Vous etes sur l'application Hospital
+                </div>
+                <div class="d-flex justify-content-center">
+                    <!--<a href="#">Forgot your password?</a>-->
+                </div>
+            </div>
+        </div>
+        <div class="card" th:if="${param.changed}">
+               <div th:if="${param.changeError}">
+                   <script>
+                       $.notify({
+                           icon: 'pe-7s-gift',
+                           message: "Mot de passe incorrecte"
+
+                       }, {
+                           type: 'danger',
+                           timer: 4000,
+                           placement: {
+                               from: "top",
+                               align: "center"
+                           },
+
+                       });
+                   </script>
+
+               </div>
+
+            <div class="card-header">
+                <h3 style="font-size: 15px !important;text-align: center">Changement Mot de passe</h3>
+                <div class="d-flex justify-content-end social_icon">
+                    <span><i class="fab fa-facebook-square"></i></span>
+                    <span><i class="fab fa-google-plus-square"></i></span>
+                    <span><i class="fab fa-twitter-square"></i></span>
+                </div>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/auth/change}" method="post">
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input type="text" id="username" name="username" autofocus="autofocus" required class="form-control" placeholder="Nom d'utilisateur">
+
+                    </div>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+                        <input type="password" class="form-control" placeholder="Mot de Passe Actuel" id="password" name="password" required>
+                    </div>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+                        <input type="password" class="form-control" placeholder="Nouveau mot de passe" id="newpassword" name="newpassword" required>
+                    </div>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                  <!-- <div class="row align-items-center remember">
+                        &lt;!&ndash;<input type="checkbox">Remember Me&ndash;&gt;
+                    </div>-->
+                    <div class="form-group" style="text-align: center;margin-top: 55px">
+                        <input type="submit" value="S'authentifié" class="btn  login_btn">
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-center links">
+                   <a th:href="@{/login}" style="position: relative;top: -15px;">Login</a>
                 </div>
                 <div class="d-flex justify-content-center">
                     <!--<a href="#">Forgot your password?</a>-->

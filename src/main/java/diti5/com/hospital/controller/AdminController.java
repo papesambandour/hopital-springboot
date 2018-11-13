@@ -42,6 +42,7 @@ public class AdminController {
 		ModelAndView view = new ModelAndView("admin/users/users");
 		List<Utilisateur> users = userDAO.findAll();
 		view.addObject("users",users);
+		int a=90;
 		return view;
 	}
 	@RequestMapping(value="/users/add")

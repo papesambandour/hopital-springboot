@@ -84,6 +84,12 @@ public class AdminController {
 			@RequestParam(value="idService", required=true) String idService,
 			@RequestParam(value="password", required=true) String password) throws IOException
 	{
+		Utilisateur uVerify = userDAO.findByMatriculeOrUsername(matricule,username);
+		if(uVerify != null)
+        {
+            httpResponse.sendRedirect("/admin/users/add?error=1");
+            return  null;
+        }
 		Utilisateur u = new Utilisateur();
 		u.setNom(nom);u.setPassword(bCrypteEncoder.encode(password));u.setMatricule(matricule);
 		u.setPrenom(prenom);u.setEnabled(Integer.parseInt(enabled));
@@ -103,21 +109,19 @@ public class AdminController {
 			@RequestParam(value="id", required=true) String id,
 			@RequestParam(value="nom", required=true) String nom,
 			@RequestParam(value="prenom", required=true) String prenom,
-			@RequestParam(value="username", required=true) String username,
-			@RequestParam(value="matricule", required=true) String matricule,
 			@RequestParam(value="enabled", required=true) String enabled,
 			@RequestParam(value="listeRoles", required=true) List<String> idRole,
 			@RequestParam(value="service", required=true) String idService) throws IOException
 	{
 		Utilisateur u = userDAO.findById(Integer.parseInt(id)).get();
-		u.setNom(nom);u.setMatricule(matricule);
+		u.setNom(nom);/*u.setMatricule(matricule);*/
 		u.setPrenom(prenom);u.setEnabled(Integer.parseInt(enabled));
 		List<Role> roles = new ArrayList<Role>();
 		for(String idR : idRole)
 		{
 			roles.add(roleDAO.findById(Integer.parseInt(idR)).get());
 		}
-		u.setUsername(username);u.setService(serviceDOA.findById(Integer.parseInt(idService)).get());
+		/*u.setUsername(username);*/u.setService(serviceDOA.findById(Integer.parseInt(idService)).get());
 		u.setListeRoles(roles);
 		userDAO.save(u);
 		httpResponse.sendRedirect("/admin/users?updateSuccess=1");

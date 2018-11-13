@@ -19,7 +19,7 @@ public class Utilisateur {
 	@Id 
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	@Column(length=100)
+	@Column(length=100,unique = true)
 	private String username;
 	@Column(length=100)
 	private String password;
@@ -29,7 +29,7 @@ public class Utilisateur {
 	private String prenom;
 	@Column(length=50)
 	private String nom;
-	@Column(length=10)
+	@Column(length=10,unique = true)
 	private String matricule;
 	@ManyToMany(cascade = {
 			CascadeType.PERSIST,

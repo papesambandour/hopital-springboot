@@ -3,6 +3,7 @@
 <head>
     <title>Utilisateurs | Hospital</title>
     <div th:replace="fragments/layout-admin :: layout-css"></div>
+    <div th:replace="fragments/layout-admin :: layout-js"></div>
 </head>
 <body>
 
@@ -15,6 +16,24 @@
         <!--START LAYOUT NAV HORIZONTAL-->
         <div th:replace="fragments/layout-admin :: layout-nav"></div>
         <!--END LAYOUT NAV HORIZONTAL-->
+        <div th:if="${param.error}">
+            <script>
+                $.notify({
+                    icon: 'pe-7s-gift',
+                    message: "Le nom d'utilisateur ou le matricule sont dejat pris"
+
+                }, {
+                    type: 'danger',
+                    timer: 4000,
+                    placement: {
+                        from: "top",
+                        align: "center"
+                    },
+
+                });
+            </script>
+
+        </div>
 
         <div class="content">
             <div class="container-fluid myMainContainer">
@@ -107,6 +126,6 @@
 </div>
 </body>
 <!--START LAYOUT JS-->
-<div th:replace="fragments/layout-admin :: layout-js"></div>
+
 <!--END LAYOUT JS-->
 </html>

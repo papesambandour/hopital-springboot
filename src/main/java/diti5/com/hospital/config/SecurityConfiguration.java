@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -23,12 +24,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
-    private DataSource dataSource;
-
 
     @Autowired
     private UserDetailsService userDetailsService ;
+    @Autowired
+    private AccessDeniedHandler accessDeniedHandler;
     /*
     @Value("${spring.queries.utilisateur-query}")
     private String usersQuery;
@@ -59,15 +59,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 authorizeRequests()
 
                 .antMatchers("/login").permitAll()
-            //    .antMatchers("/admin/**").access("hasRole('ADMIN') or hasRole('ADMIN')")//hasRole("ADMIN")
-              //  .antMatchers("/medecin/**").hasRole("MEDECIN")
-                //.antMatchers("/secretaire/**").hasRole("SECRETAIRE")
+               .antMatchers("/admin/**").hasAnyAuthority("ADMIN")//access("hasRole('ADMIN') or hasRole('ADMIN')")//hasRole("ADMIN")
+                .antMatchers("/medecin/**").hasAnyAuthority("MEDECIN")
+                .antMatchers("/secretaire/**").hasAnyAuthority("SECRETAIRE")
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")
-                .successHandler(myAuthenticationSuccessHandler());
+                .successHandler(myAuthenticationSuccessHandler())
+                .and()
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
         //https://www.journaldev.com/8748/spring-security-role-based-access-authorization-example
              
     }

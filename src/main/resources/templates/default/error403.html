@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hospital | DashBord</title>
+    <div th:replace="fragments/layout-default :: layout-css"></div>
+</head>
+<body>
+
+<div class="wrapper">
+
+
+    <div class="main-panel">
+
+        <div class="content">
+            <div class="container-fluid myMainContainer">
+                <!--MAIN CONTENT-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card" style="text-align: center">
+                            <div class="header">
+                                <h4 class="title">ERREUR  403</h4>
+                            </div>
+                            <div>
+                                <div class="content">
+                                    VOUS N'AVEZ DROIT D'ACCEDER A CETTE PAGE
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--MAIN CONTENT-->
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<!--START LAYOUT JS-->
+<div th:replace="fragments/layout-default :: layout-js"></div>
+<!--END LAYOUT JS-->
+</html>

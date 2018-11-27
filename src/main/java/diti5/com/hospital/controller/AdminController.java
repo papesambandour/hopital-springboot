@@ -8,6 +8,7 @@ import diti5.com.hospital.model.Service;
 import diti5.com.hospital.model.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,7 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping(value="/admin")
 public class AdminController {
 
@@ -42,7 +43,6 @@ public class AdminController {
 		ModelAndView view = new ModelAndView("admin/users/users");
 		List<Utilisateur> users = userDAO.findAll();
 		view.addObject("users",users);
-		int a=90;
 		return view;
 	}
 	@RequestMapping(value="/users/add")
@@ -104,7 +104,8 @@ public class AdminController {
 		httpResponse.sendRedirect("/admin/users?addSuccess=1");
 		return null;
 
-	}@RequestMapping(value="/users/update",method = RequestMethod.POST)
+	}
+	@RequestMapping(value="/users/update",method = RequestMethod.POST)
 	public String usersUpdate(HttpServletResponse httpResponse,
 			@RequestParam(value="id", required=true) String id,
 			@RequestParam(value="nom", required=true) String nom,

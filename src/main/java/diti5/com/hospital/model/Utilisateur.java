@@ -27,10 +27,21 @@ public class Utilisateur {
 	private int changed;
 	@Column(length=100)
 	private String prenom;
+	@Column(length=256,nullable = true)
+	private String img;
 	@Column(length=50)
 	private String nom;
 	@Column(length=10,unique = true)
 	private String matricule;
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
 	@ManyToMany(cascade = {
 			CascadeType.PERSIST,
 			CascadeType.MERGE

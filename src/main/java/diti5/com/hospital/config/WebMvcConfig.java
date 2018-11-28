@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -39,4 +40,21 @@ public class WebMvcConfig implements WebMvcConfigurer {
         paths.add("/secretaire/**");
          registry.addInterceptor(new MyCustomInterceptor(userDAO) ).addPathPatterns(paths);
     }
+   /* @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler(
+                "/webjars/**",
+                "/imgages/**",
+                "/css/**",
+                "/assets/**",
+               // "/upload/**",
+                "/js/**")
+                .addResourceLocations(
+                        "classpath:/META-INF/resources/webjars/",
+                        "classpath:/static/imgages/",
+                        "classpath:/static/css/",
+                        "classpath:/static/assets/",
+                        "classpath:/static/uplaod/",
+                        "classpath:/static/js/");
+    }*/
 }

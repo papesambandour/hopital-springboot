@@ -10,13 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 @Controller
 @RequestMapping(value="/admin")
 public class AdminController {
@@ -29,6 +33,7 @@ public class AdminController {
 	private ServiceDOA serviceDOA;
 	@Autowired
 	private RoleDAO roleDAO ;
+	private String IMG_USER = "C:\\Users\\papes\\Documents\\PAPE NDOUR\\DITI5\\JEE\\workspace intelij\\hopital\\src\\main\\resources\\static\\upload\\images\\";
 	@RequestMapping(value="/dashbord")
 	//@ResponseBody
 	//@RequestMapping(value="/course", method = RequestMethod.GET, produces="application/json")
@@ -77,22 +82,38 @@ public class AdminController {
 	public String usersSave(HttpServletResponse httpResponse,
 			@RequestParam(value="nom", required=true) String nom,
 			@RequestParam(value="prenom", required=true) String prenom,
-			@RequestParam(value="username", required=true) String username,
 			@RequestParam(value="matricule", required=true) String matricule,
 			@RequestParam(value="enabled", required=true) String enabled,
 			@RequestParam(value="idRole", required=true) List<String> idRole,
 			@RequestParam(value="idService", required=true) String idService,
-			@RequestParam(value="password", required=true) String password) throws IOException
+			@RequestParam(value="password", required=true) String password,
+                            @RequestParam("file") MultipartFile file) throws IOException
 	{
+        String username = matricule + nom;
 		Utilisateur uVerify = userDAO.findByMatriculeOrUsername(matricule,username);
+		String img_uri = "";
 		if(uVerify != null)
         {
             httpResponse.sendRedirect("/admin/users/add?error=1");
             return  null;
         }
+        try {
+
+            // Get the file and save it somewhere
+            byte[] bytes = file.getBytes();
+            img_uri = file.getOriginalFilename();
+            Path path = Paths.get(IMG_USER + img_uri);
+            Files.write(path, bytes);
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 		Utilisateur u = new Utilisateur();
 		u.setNom(nom);u.setPassword(bCrypteEncoder.encode(password));u.setMatricule(matricule);
 		u.setPrenom(prenom);u.setEnabled(Integer.parseInt(enabled));
+		u.setImg(img_uri);
 		List<Role> roles = new ArrayList<Role>();
 		for(String idR : idRole)
 		{

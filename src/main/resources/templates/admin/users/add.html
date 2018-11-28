@@ -46,15 +46,15 @@
                             </div>
                             <div>
                                 <div class="content" style="margin: 30px">
-                                    <form th:action="@{/admin/users/save}" method="post">
+                                    <form th:action="@{/admin/users/save}"  method="post" enctype="multipart/form-data">
                                         <div class="form-group row">
                                             <label for="nom" class="col-sm-2 col-form-label">Nom</label>
                                             <div class="col-sm-10">
-                                                 <input type="text" class="form-control" placeholder="Nom" id="nom" name="nom" required>
+                                                 <input type="text"  class="form-control" placeholder="Nom" id="nom" name="nom" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="prenom"  class="col-sm-2 col-form-label">Prenom</label>
+                                            <label for="prenom"  class="col-sm-2 col-form-label">Prenom </label>
                                             <div class="col-sm-10">
                                             <input type="text" class="form-control" placeholder="Prenom" id="prenom" name="prenom" required>
                                             </div>
@@ -62,20 +62,29 @@
                                         <div class="form-group row">
                                             <label for="username" class="col-sm-2 col-form-label">Nom d'utilisateur</label>
                                             <div class="col-sm-10">
-                                            <input type="text" class="form-control form-control-lg" placeholder="Nom d'utilisateur" id="username" name="username" required>
+                                            <input readonly type="text" class="form-control form-control-lg" placeholder="Nom d'utilisateur" id="username" name="username" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="matricule" class="col-sm-2 col-form-label">Matricule</label>
                                             <div class="col-sm-10">
-                                            <input type="text" class="form-control" placeholder="Nom d'utilisateur" id="matricule" name="matricule" required>
+                                            <input type="text" id="matricule" class="form-control" placeholder="Nom d'utilisateur"  name="matricule" required>
                                             </div>
                                             </div>
                                         <div class="form-group row">
                                             <label for="password" class="col-sm-2 col-form-label">Mot de passe</label>
                                             <div class="col-sm-10">
-                                            <input type="password" class="form-control" placeholder="Mot de Passe" id="password" name="password" required>
+                                             <input type="password" class="form-control" placeholder="Mot de Passe" id="password" name="password" required>
                                             </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="file" class="col-sm-2 col-form-label">Photo</label>
+                                            <div class="col-sm-2">
+                                             <input type="file"  placeholder="Mot de Passe" id="file" name="file" required>
+                                            </div>
+                                        </div>
+                                        <div class="" style="height: 300px;width:300px;border: 1px solid black;margin: auto">
+                                            <img style="width: 100%; height:100%" th:src="@{/upload/images/userdefault.png}" alt="User profile" />
                                         </div>
                                         <div class="form-group row">
                                             <label for="enabled" class="col-sm-2 col-form-label">Etat</label>
@@ -124,6 +133,14 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).on('keyup','#matricule,#nom',function () {
+
+        var username =  $('#matricule').val().replace(' ','-')  +  $('#nom').val().replace(' ','-') ;
+        $('#username').val(username.toLowerCase());
+    })
+</script>
 </body>
 <!--START LAYOUT JS-->
 

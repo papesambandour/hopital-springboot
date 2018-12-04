@@ -24,15 +24,23 @@
                         <div class="card">
                             <div class="header">
                                 <h4 class="title">Edit utilisateur</h4>
+                                <div class="" style="height: 100px;width:100px;border: 1px solid black;margin: auto;text-align: right">
+                                    <img id="imgProfil" style="width: 100%; height:100%" th:src="@{'/upload/images/' + ${user.getImg()}}" alt="User profile" />
+                                </div>
                             </div>
                             <div>
                                 <div class="content" style="margin: 30px">
-                                    <form th:action="@{/admin/users/update}" method="post" th:object="${user}">
+                                    <form th:action="@{/admin/users/update}" method="post" th:object="${user}" enctype="multipart/form-data">
                                         <div class="form-group row">
                                             <label for="nom" class="col-sm-2 col-form-label">Nom</label>
                                             <div class="col-sm-10">
                                                  <input type="text" class="form-control" placeholder="Nom" id="nom" name="nom" th:field="*{nom}" required>
                                                   <input type="hidden" id="name" th:field="*{id}"/>
+                                                  <input type="hidden"  th:field="*{matricule}"/>
+                                                  <input type="hidden"  th:field="*{username}"/>
+                                                  <input type="hidden"  th:field="*{password}"/>
+                                                  <input type="hidden"  th:field="*{changed}"/>
+                                                  <input type="hidden" name="urlImg" th:value="${urlImg}"/>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -44,28 +52,32 @@
                                         <div class="form-group row">
                                             <label for="username" class="col-sm-2 col-form-label">Nom d'utilisateur</label>
                                             <div class="col-sm-10">
-                                            <input type="text" class="form-control form-control-lg" th:field="*{username}" placeholder="Nom d'utilisateur" id="username" name="username" required disabled>
+                                            <input type="text" class="form-control form-control-lg" th:value="${user.getUsername()}" placeholder="Nom d'utilisateur" id="username" name="username" required disabled>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="matricule" class="col-sm-2 col-form-label">Matricule</label>
                                             <div class="col-sm-10">
-                                            <input type="text" class="form-control" placeholder="Nom d'utilisateur" th:field="*{matricule}" id="matricule" name="matricule" required disabled>
+                                            <input type="text" class="form-control" placeholder="Nom d'utilisateur" th:value="${user.getMatricule()}" id="matricule" name="matricule" required disabled>
                                             </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="file" class="col-sm-2 col-form-label">Photo</label>
+                                            <div class="col-sm-2">
+                                                <input type="file"  placeholder="Mot de Passe" id="file" name="file">
                                             </div>
-                                        <!--<div class="form-group row">
-                                            <label for="password" class="col-sm-2 col-form-label">Mot de passe</label>
-                                            <div class="col-sm-10">
-                                            <input type="text" class="form-control" placeholder="Mot de Passe" th:field="*{password}" id="password" name="password" required>
-                                            </div>
-                                        </div>-->
+                                        </div>
+
+
                                         <div class="form-group row">
                                             <label for="enabled" class="col-sm-2 col-form-label">Etat</label>
                                             <div class="col-sm-10">
-                                            <select name="enabled" id="enabled" class="form-control" required >
-                                                <option value="" disabled hidden selected>Choisir l'etat</option>
-                                                <option th:value="${1}">Active</option>
-                                                <option th:value="${0}">Desactive</option>
+                                            <select name="enabled" id="enabled" class="form-control" required th:field="*{enabled}">
+                                                <option th:each="etat : ${listEtat}" th:value="${etat}">
+                                                    <span th:if="${etat == 0}" >Desactive</span>
+                                                    <span th:if="${etat == 1}" >Active</span>
+                                                </option>
                                             </select>
                                             </div>
                                         </div>
@@ -110,4 +122,21 @@
 <!--START LAYOUT JS-->
 <div th:replace="fragments/layout-admin :: layout-js"></div>
 <!--END LAYOUT JS-->
+<script>
+    $("#file").change(function() {
+        readURL(this);
+    });
+    function readURL(input) {
+
+        if (input && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#imgProfil').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
 </html>

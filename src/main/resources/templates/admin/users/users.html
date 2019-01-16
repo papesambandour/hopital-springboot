@@ -97,6 +97,7 @@
                                             <th>etat</th>
                                             <th>Role</th>
                                             <th>Action</th>
+                                            <th>Photos</th>
                                         </tr>
                                     </thead>
                                     <tbody th:each="user : ${users}">
@@ -118,6 +119,11 @@
                                             <td style="text-align: center">
                                                 <a th:href="@{'/admin/users/edit/' + ${user.getId()}}" ><button class="btn btn-success">Edit</button></a>
                                                 <a th:href="@{'/admin/users/delete/' + ${user.getId()}}" ><button class="btn btn-outline-warning">Delete</button></a>
+                                            </td>
+                                            <td>
+                                                <div class="" style="height: 70px;width:100px;border: 1px solid black;margin: auto;text-align: right">
+                                                    <img id="imgProfil" style="width: 100%; height:100%" th:src="@{'/upload/images/' + ${user.getImg()}}" alt="User profile" />
+                                                </div>
                                             </td>
                                         </tr>
 
